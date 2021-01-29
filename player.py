@@ -10,6 +10,7 @@ class Player(pg.sprite.Sprite):
     self.rect = self.image.get_rect()
     self.rect.center = startpos
     self.direction = 0 #zero indicates the player is pointing to the right of screen
+    self.posX, self.posY = self.rect.center
 
   def update(self):
     self.image = self.rot_center(self.original_image,self.direction)
@@ -31,9 +32,7 @@ class Player(pg.sprite.Sprite):
       self.direction = 360
 
   def move(self, distance):
-    #self.rect = (self.rect[0] + distance*math.cos(math.radians(self.direction)), self.rect[1] - distance*math.sin(math.radians(self.direction)))
-    print(distance*math.cos(math.radians(self.direction)))
-    print(distance*math.sin(math.radians(self.direction)))
-    self.rect.x += distance*math.cos(math.radians(self.direction))
-    self.rect.y -= distance*math.sin(math.radians(self.direction))
-    print(self.rect)
+    # have to use a seperate position variable because rect only uses integers
+    self.posX += distance*math.cos(math.radians(self.direction))
+    self.posY -= distance*math.sin(math.radians(self.direction))
+    self.rect.center = (self.posX, self.posY)
