@@ -4,5 +4,6 @@ import os
 class Background(pg.sprite.Sprite):
   def __init__(self, width, height):
     pg.sprite.Sprite.__init__(self)
-    self.image = pg.transform.scale(pg.image.load(os.path.join("Assets", "temp_island_1")), (width, height)).convert_alpha()
+    self.image = pg.Surface((width, height))
+    self.image.fill((0, 173, 173))
     self.rect = self.image.get_rect()
