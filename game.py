@@ -17,6 +17,8 @@ class MainGame:
     self.screen = pg.display.set_mode(self.SCREEN_SIZE)
     pg.display.set_caption("LOST")
 
+    self.bg_music = pg.mixer.Sound(os.path.join("Assets", "The_Islands_Mystery.wav"))
+
     self.background = Background(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     self.island = Island(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     self.player = Player(566//8, 566//8, (200, 200)) # I like me some magic numbers nom nom
@@ -57,6 +59,9 @@ class MainGame:
 
 
   def run(self):
+    
+    pg.mixer.Channel(0).play(self.bg_music, -1)
+    
     while True:
       # pg.event.get() clears event queue once called so need to save
       #   the list of events so that they can be used but other objects etc
