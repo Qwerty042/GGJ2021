@@ -1,4 +1,5 @@
 import pygame as pg
+import os
 
 
 
@@ -7,11 +8,19 @@ class MainGame:
     pg.init()
     self.SCREEN_WIDTH = 1200
     self.SCREEN_HEIGHT = 800
+    self.BG_COLOUR = (0, 173, 173)
     self.screen = pg.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+    self.bg_image = pg.image.load(os.path.join("Assets", "temp_island1.png")).convert_alpha()
+    self.bg_image = pg.transform.scale(self.bg_image, (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
 
 
   def game_loop(self, events):
-    return    
+    bg_surface = pg.Surface((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+    bg_surface.fill(self.BG_COLOUR)
+    bg_surface.blit(self.bg_image, (0,0))
+    self.screen.blit(bg_surface, (0,0))
+    pg.display.update()
+    return
 
 
   def run(self):
