@@ -19,8 +19,10 @@ class MainGame:
 
     self.background = Background(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     self.island = Island(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
-    self.player = Player(283//4, 381//4, (200, 200))
+    self.player = Player(566//8, 762//8, (200, 200)) # I like me some magic numbers nom nom
 
+    # list of all the sprite objects to be drawn
+    # first in list is drawn first so will be underneath evertthing else
     self.sprite_group = pg.sprite.OrderedUpdates([
       self.background,
       self.island,
@@ -29,6 +31,8 @@ class MainGame:
 
 
   def _game_logic(self, events):
+    # add dank game logic here
+    # call update functions of sprite objects
     return
 
 
@@ -43,11 +47,14 @@ class MainGame:
 
   def run(self):
     while True:
+      # pg.event.get() clears event queue once called so need to save
+      #   the list of events so that they can be used but other objects etc
       events = pg.event.get()
 
       self._game_logic(events)
       self._draw()
 
+      # So you can actually exit the game
       for event in events:
         if (event.type == pg.QUIT) or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
           sys.exit()
