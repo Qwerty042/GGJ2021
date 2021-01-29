@@ -9,8 +9,8 @@ class Player(pg.sprite.Sprite):
     self.image = self.original_image.copy()
     self.rect = self.image.get_rect()
     self.rect.center = startpos
-    self.direction = 0 #zero indicates the player is pointing to the right of screen
-    self.posX, self.posY = self.rect.center
+    self.direction = 0                           # zero indicates the player is pointing to the right of screen
+    self.pos_x, self.pos_y = self.rect.center    # have to use a seperate position variable because rect only uses integers
 
   def update(self):
     self.image = self.rot_center(self.original_image,self.direction)
@@ -31,8 +31,12 @@ class Player(pg.sprite.Sprite):
     if self.direction < 0:
       self.direction = 360
 
-  def move(self, distance):
-    # have to use a seperate position variable because rect only uses integers
-    self.posX += distance*math.cos(math.radians(self.direction))
-    self.posY -= distance*math.sin(math.radians(self.direction))
-    self.rect.center = (self.posX, self.posY)
+  def move(self, distance, island_mask):
+    next_pos_x = self.pos_x + distance*math.cos(math.radians(self.direction))
+    next_pos_y = self.pos_y - distance*math.sin(math.radians(self.direction))
+    
+    if island_mask.get_at((int(next_pos_x), int(next_pos_y))): # check if new pos is within the island
+      self.pos_x = next_pos_x
+      self.pos_y = next_pos_y
+
+    self.rect.center = (self.pos_x, self.pos_y)

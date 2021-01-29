@@ -39,9 +39,9 @@ class MainGame:
     if keys[pg.K_d]:
       self.player.rotate(-1)
     if keys[pg.K_w]:
-      self.player.move(1)
+      self.player.move(1, self.island.mask)
     if keys[pg.K_s]:
-      self.player.move(-1)
+      self.player.move(-1, self.island.mask)
 
     # call update functions of sprite objects in sprite group
     self.sprite_group.update()
