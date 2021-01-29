@@ -19,7 +19,7 @@ class MainGame:
 
     self.background = Background(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     self.island = Island(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
-    self.player = Player(566//8, 762//8, (200, 200)) # I like me some magic numbers nom nom
+    self.player = Player(566//8, 566//8, (200, 200)) # I like me some magic numbers nom nom
 
     # list of all the sprite objects to be drawn
     # first in list is drawn first so will be underneath evertthing else
@@ -32,7 +32,19 @@ class MainGame:
 
   def _game_logic(self, events):
     # add dank game logic here
+    
+    keys=pg.key.get_pressed()
+    if keys[pg.K_a]:
+      self.player.rotate(1)
+    if keys[pg.K_d]:
+      self.player.rotate(-1)
+    if keys[pg.K_w]:
+      self.player.move(1)
+    if keys[pg.K_s]:
+      self.player.move(-1)
     # call update functions of sprite objects
+    for sprite in self.sprite_group:
+      sprite.update()
     return
 
 
