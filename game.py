@@ -42,10 +42,9 @@ class MainGame:
       self.player.move(1)
     if keys[pg.K_s]:
       self.player.move(-1)
-    # call update functions of sprite objects
-    for sprite in self.sprite_group:
-      sprite.update()
-    return
+
+    # call update functions of sprite objects in sprite group
+    self.sprite_group.update()
 
 
   def _draw(self):

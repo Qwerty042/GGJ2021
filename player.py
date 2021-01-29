@@ -5,7 +5,7 @@ import os
 class Player(pg.sprite.Sprite):
   def __init__(self, width, height, startpos):
     pg.sprite.Sprite.__init__(self)
-    self.original_image = pg.transform.scale(pg.image.load(os.path.join("Assets", "temp_player_2.png")), (width, height)).convert_alpha()
+    self.original_image = pg.transform.smoothscale(pg.image.load(os.path.join("Assets", "temp_player_2.png")), (width, height)).convert_alpha()
     self.image = self.original_image.copy()
     self.rect = self.image.get_rect()
     self.rect.center = startpos
@@ -31,4 +31,9 @@ class Player(pg.sprite.Sprite):
       self.direction = 360
 
   def move(self, distance):
-    self.rect = (self.rect[0] + distance*math.cos(math.radians(self.direction)), self.rect[1] - distance*math.sin(math.radians(self.direction)))
+    #self.rect = (self.rect[0] + distance*math.cos(math.radians(self.direction)), self.rect[1] - distance*math.sin(math.radians(self.direction)))
+    print(distance*math.cos(math.radians(self.direction)))
+    print(distance*math.sin(math.radians(self.direction)))
+    self.rect.x += distance*math.cos(math.radians(self.direction))
+    self.rect.y -= distance*math.sin(math.radians(self.direction))
+    print(self.rect)
