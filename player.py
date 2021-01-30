@@ -43,7 +43,7 @@ class Player(pg.sprite.Sprite):
     player_radius = max(self.rect.width, self.rect.height)
     
     for chest in chests:
-      chest_mask = pg.mask.from_surface(chest.image)
+      chest_mask = pg.mask.from_surface(chest.closed_image)
       scaled_chest_mask = chest_mask.scale((chest.rect.width + player_radius, chest.rect.height + player_radius))
       scaled_chest_mask_size = scaled_chest_mask.get_size()
       scaled_chest_mask_pos = (chest.rect.centerx - scaled_chest_mask_size[0]//2, chest.rect.centery - scaled_chest_mask_size[1]//2)
