@@ -16,18 +16,18 @@ class MainGame:
     self.SCREEN_HEIGHT = 800
     self.SCREEN_SIZE = (self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     chest_secret_messages = [
-      "You have unlocked chest 1",
-      "You have unlocked chest 2",
-      "You have unlocked chest 3",
-      "You have unlocked chest 4",
-      "You have unlocked chest 5",
-      "You have unlocked chest 6",
+      "Nice.",
+      "tinyurl.com/aliensarerealandtheyarehere",
+      "Nice.",
+      "Password: check the game description for the password",
+      "https://pastebin.com/mLGDVsMc",
+      "YOU WIN!",
     ]
 
     scroll_messages = [
-      "This is scroll 1",
-      "This is scroll 2",
-      "This is scroll 3"
+      "4, 8, 15, 16, 23, 42",
+      "The code to the south chest is the year Gabriel Cramer was born.",
+      "Press E to interact with objects... oh wait you just have."
     ]
 
     pg.init()
@@ -41,12 +41,12 @@ class MainGame:
     self.island = Island(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     self.player = Player(566//8, 566//8, (200, 200)) # I like me some magic numbers nom nom
     self.paper = Paper(self.SCREEN_WIDTH, 120, (0, self.SCREEN_HEIGHT - 120))
-    self.chest_1 = Chest(642//8, 683//8, (288, 138), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [1,1,1,9], chest_secret_messages[0])
-    self.chest_2 = Chest(642//8, 683//8, (907, 125), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [2,2,2,9], chest_secret_messages[1])
-    self.chest_3 = Chest(642//8, 683//8, (200, 660), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [3,3,3,9], chest_secret_messages[2])
-    self.chest_4 = Chest(642//8, 683//8, (1025, 648), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [4,4,4,9], chest_secret_messages[3])
-    self.chest_5 = Chest(642//8, 683//8, (557, 585), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [5,5,5,9], chest_secret_messages[4])
-    self.chest_6 = Chest(642//8, 683//8, (550, 379), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,6,6,9], chest_secret_messages[5])
+    self.chest_1 = Chest(642//8, 683//8, (288, 138), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,9,6,9], chest_secret_messages[0])
+    self.chest_2 = Chest(642//8, 683//8, (907, 125), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [5,5,1,6], chest_secret_messages[1])
+    self.chest_3 = Chest(642//8, 683//8, (200, 660), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,9,6,9], chest_secret_messages[2])
+    self.chest_4 = Chest(642//8, 683//8, (1025, 648), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [9,8,5,7], chest_secret_messages[3])
+    self.chest_5 = Chest(642//8, 683//8, (557, 585), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [1,7,0,4], chest_secret_messages[4])
+    self.chest_6 = Chest(642//8, 683//8, (550, 379), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,0,7,9], chest_secret_messages[5])
     self.scroll_1 = Scroll(395//8, 404//8, (304, 455), scroll_messages[0])
     self.scroll_2 = Scroll(395//8, 404//8, (633, 129), scroll_messages[1])
     self.scroll_3 = Scroll(395//8, 404//8, (900, 415), scroll_messages[2])
