@@ -6,6 +6,7 @@ from background import *
 from island import *
 from paper import *
 from chest import *
+from scroll import *
 
   
 class MainGame:
@@ -21,6 +22,12 @@ class MainGame:
       "You have unlocked chest 4",
       "You have unlocked chest 5",
       "You have unlocked chest 6",
+    ]
+
+    scroll_messages = [
+      "This is scroll 1",
+      "This is scroll 2",
+      "This is scroll 3"
     ]
 
     pg.init()
@@ -40,13 +47,18 @@ class MainGame:
     self.chest_4 = Chest(642//8, 683//8, (1025, 648), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [4,4,4,9], chest_secret_messages[3])
     self.chest_5 = Chest(642//8, 683//8, (557, 585), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [5,5,5,9], chest_secret_messages[4])
     self.chest_6 = Chest(642//8, 683//8, (550, 379), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,6,6,9], chest_secret_messages[5])
+    self.scroll_1 = Scroll(395//8, 404//8, (304, 455), scroll_messages[0])
+    self.scroll_2 = Scroll(395//8, 404//8, (633, 129), scroll_messages[1])
+    self.scroll_3 = Scroll(395//8, 404//8, (900, 415), scroll_messages[2])
 
     self.chests = [self.chest_1, self.chest_2, self.chest_3, self.chest_4, self.chest_5, self.chest_6]
+    self.scrolls = [self.scroll_1, self.scroll_2, self.scroll_3]
     # list of all the sprite objects to be drawn
     # first in list is drawn first so will be underneath evertthing else
     self.main_sprite_group = pg.sprite.OrderedUpdates([
       self.background,
       self.island,
+      *self.scrolls,
       self.player
     ])
 
@@ -62,6 +74,11 @@ class MainGame:
       if chest.is_interacting:
         interacting = True
         break
+    if not interacting:
+      for scroll in self.scrolls:
+        if scroll.is_interacting:
+          interacting = True
+          break
 
     keys=pg.key.get_pressed()
     if not interacting:
@@ -83,6 +100,15 @@ class MainGame:
               chest.interact(self.paper)
           else:
             chest.interact(self.paper)
+        
+        for scroll in self.scrolls:
+          if not scroll.is_interacting:
+            player_to_scroll_dist = abs(math.sqrt((self.player.rect.centerx - scroll.rect.centerx)**2 + (self.player.rect.centery - scroll.rect.centery)**2))
+            if player_to_scroll_dist < 80:
+              scroll.interact(self.paper)
+          else:
+            scroll.interact(self.paper)
+
 
 
     # call update functions of sprite objects in sprite group
