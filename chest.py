@@ -2,7 +2,7 @@ import pygame as pg
 import os
 
 class Chest(pg.sprite.Sprite):
-  def __init__(self, width, height, pos, screen_width, screen_height):
+  def __init__(self, width, height, pos, screen_width, screen_height, passcode):
     pg.sprite.Sprite.__init__(self)
     self.font = pg.font.SysFont(None, 128)
     self.font.set_bold(True)
@@ -19,7 +19,7 @@ class Chest(pg.sprite.Sprite):
     self.is_interacting = False
     self.is_digit_pressed = False
     self.digits = [None, None, None, None]
-    self.passcode = [1, 2, 3, 4]
+    self.passcode = passcode
 
   def interact(self):
     self.is_interacting = not self.is_interacting
