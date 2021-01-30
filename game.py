@@ -4,6 +4,8 @@ import sys
 from player import *
 from background import *
 from island import *
+from paper import *
+from chest import *
 
   
 class MainGame:
@@ -14,6 +16,7 @@ class MainGame:
     self.SCREEN_SIZE = (self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
 
     pg.init()
+    pg.font.init()
     self.screen = pg.display.set_mode(self.SCREEN_SIZE)
     pg.display.set_caption("LOST")
 
@@ -22,13 +25,15 @@ class MainGame:
     self.background = Background(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     self.island = Island(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     self.player = Player(566//8, 566//8, (200, 200)) # I like me some magic numbers nom nom
+    self.paper = Paper(self.SCREEN_WIDTH, 120, (0, self.SCREEN_HEIGHT - 120))
 
     # list of all the sprite objects to be drawn
     # first in list is drawn first so will be underneath evertthing else
     self.sprite_group = pg.sprite.OrderedUpdates([
       self.background,
       self.island,
-      self.player
+      self.player,
+      self.paper
     ])
 
 
@@ -44,6 +49,9 @@ class MainGame:
       self.player.move(1, self.island.mask)
     if keys[pg.K_s]:
       self.player.move(-1, self.island.mask)
+    if keys[pg.K_e]:
+      self.paper.write("Hello World!")
+      self.paper.appear()
 
     # call update functions of sprite objects in sprite group
     self.sprite_group.update()
