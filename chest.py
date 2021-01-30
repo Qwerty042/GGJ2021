@@ -10,3 +10,10 @@ class Chest(pg.sprite.Sprite):
     self.rect = self.image.get_rect()
     self.rect.center = pos
     self.closed = True
+
+  def interact(self):
+    self.closed = not self.closed
+    if self.closed: self.image = self.closed_image
+    else: self.image = self.open_image
+
+    

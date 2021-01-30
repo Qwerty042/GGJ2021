@@ -51,9 +51,14 @@ class MainGame:
       self.player.move(1, self.island.mask, self.chest)
     if keys[pg.K_s]:
       self.player.move(-1, self.island.mask, self.chest)
-    if keys[pg.K_e]:
-      self.paper.write("Hello World!")
-      self.paper.appear()
+    # if keys[pg.K_e]:
+
+    for event in events:
+      if (event.type == pg.KEYDOWN) and (event.key == pg.K_e):
+        player_to_chest_dist = abs(math.sqrt((self.player.rect.centerx - self.chest.rect.centerx)**2 + (self.player.rect.centery - self.chest.rect.centery)**2))
+        if player_to_chest_dist < 100:
+          self.chest.interact()
+
 
     # call update functions of sprite objects in sprite group
     self.sprite_group.update()
