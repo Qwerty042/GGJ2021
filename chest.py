@@ -4,7 +4,7 @@ import os
 class Chest(pg.sprite.Sprite):
   def __init__(self, width, height, pos, screen_width, screen_height, passcode):
     pg.sprite.Sprite.__init__(self)
-    self.font = pg.font.SysFont(None, 128)
+    self.font = pg.font.SysFont(None, 256)
     self.font.set_bold(True)
     self.open_image = pg.transform.smoothscale(pg.image.load(os.path.join("Assets", "temp_chest_open_1.png")), (width,height)).convert_alpha()
     self.closed_image = pg.transform.smoothscale(pg.image.load(os.path.join("Assets", "temp_chest_closed_1.png")), (width,height)).convert_alpha()
@@ -36,20 +36,20 @@ class Chest(pg.sprite.Sprite):
 
   def _draw_digits(self):
     block_height = 300
-    block_width = 150
+    block_width = 180
     block_offset = (50,50)
-    block_offset_x_step = self.rect.width//5
+    block_offset_x_step = ((self.rect.width - 100 - (4 * block_width))//3) + block_width
     self.image
     for digit in self.digits:
       if digit == None:
-        digit_str = '_'
+        digit_str = '-'
       else:
         digit_str = str(digit)
       rendered_digit = self.font.render(digit_str, True, (200,200,200))
       digit_width, digit_height = rendered_digit.get_size()
       rendered_block = pg.Surface((block_width,block_height))
       rendered_block.fill((20,60,80))
-      digit_offset = (block_width//2 - digit_width//2, block_height//2 - digit_height//2)
+      digit_offset = (block_width//2 - digit_width//2 + 5, block_height//2 - digit_height//2)
       rendered_block.blit(rendered_digit, digit_offset)
       self.image.blit(rendered_block, block_offset)
       block_offset = (block_offset[0] + block_offset_x_step, block_offset[1])

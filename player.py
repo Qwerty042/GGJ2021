@@ -33,17 +33,18 @@ class Player(pg.sprite.Sprite):
     if self.direction < 0:
       self.direction = 360
 
-  def move(self, distance, island_mask, chest):
+  def move(self, distance, island_mask, chests):
     next_pos_x = self.pos_x + distance*math.cos(math.radians(self.direction))
     next_pos_y = self.pos_y - distance*math.sin(math.radians(self.direction))
-    
-    chest_mask = pg.mask.from_surface(chest.image)
+      
     player_radius = max(self.rect.width, self.rect.height)
-    scaled_chest_mask = chest_mask.scale((chest.rect.width + player_radius, chest.rect.height + player_radius))
-    scaled_chest_mask_size = scaled_chest_mask.get_size()
-    scaled_chest_mask_pos = (chest.rect.centerx - scaled_chest_mask_size[0]//2, chest.rect.centery - scaled_chest_mask_size[1]//2)
-
-    island_mask.erase(scaled_chest_mask, scaled_chest_mask_pos)
+    
+    for chest in chests:
+      chest_mask = pg.mask.from_surface(chest.image)
+      scaled_chest_mask = chest_mask.scale((chest.rect.width + player_radius, chest.rect.height + player_radius))
+      scaled_chest_mask_size = scaled_chest_mask.get_size()
+      scaled_chest_mask_pos = (chest.rect.centerx - scaled_chest_mask_size[0]//2, chest.rect.centery - scaled_chest_mask_size[1]//2)
+      island_mask.erase(scaled_chest_mask, scaled_chest_mask_pos)
 
     if island_mask.get_at((int(next_pos_x), int(next_pos_y))): # new pos is inside island
       self.pos_x = next_pos_x

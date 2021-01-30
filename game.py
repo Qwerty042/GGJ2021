@@ -61,9 +61,9 @@ class MainGame:
       if keys[pg.K_d]:
         self.player.rotate(-1)
       if keys[pg.K_w]:
-        self.player.move(1, self.island.mask, self.chest_1)
+        self.player.move(1, self.island.mask, self.chests)
       if keys[pg.K_s]:
-        self.player.move(-1, self.island.mask, self.chest_1)
+        self.player.move(-1, self.island.mask, self.chests)
     # if keys[pg.K_e]:
 
     for event in events:
@@ -71,7 +71,7 @@ class MainGame:
         for chest in self.chests:
           if not chest.is_interacting:
             player_to_chest_dist = abs(math.sqrt((self.player.rect.centerx - chest.rect.centerx)**2 + (self.player.rect.centery - chest.rect.centery)**2))
-            if player_to_chest_dist < 100:
+            if player_to_chest_dist < 110:
               chest.interact()
           else:
             chest.interact()
