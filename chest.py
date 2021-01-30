@@ -30,8 +30,13 @@ class Chest(pg.sprite.Sprite):
         paper.write(self.secret_message)
         paper.appear()
         pass
-    elif not self.is_locked:
-      paper.dissapear()
+    else:
+      if self.is_locked:
+        self.image = self.closed_image
+        self.rect = self.image.get_rect()
+        self.rect.center = self.pos
+      else:
+        paper.dissapear()
 
   def _draw_digits(self):
     block_height = 300
@@ -55,7 +60,7 @@ class Chest(pg.sprite.Sprite):
 
 
 
-  def update(self):
+  def update(self, paper):
     if self.is_interacting:
       if self.is_locked:
         self.image = pg.Surface((self.screen_width - 200, self.screen_height - 200))
@@ -113,7 +118,7 @@ class Chest(pg.sprite.Sprite):
             self.is_locked = False
             self.image = self.open_image
             self.is_interacting = False
-            self.interact()
+            self.interact(paper)
           else:
             self.image = self.closed_image
             self.is_interacting = False

@@ -44,13 +44,14 @@ class MainGame:
     self.chests = [self.chest_1, self.chest_2, self.chest_3, self.chest_4, self.chest_5, self.chest_6]
     # list of all the sprite objects to be drawn
     # first in list is drawn first so will be underneath evertthing else
-    self.sprite_group = pg.sprite.OrderedUpdates([
+    self.main_sprite_group = pg.sprite.OrderedUpdates([
       self.background,
       self.island,
-      self.player,
-      *self.chests,
-      self.paper
+      self.player
     ])
+
+    self.chests_sprite_group = pg.sprite.OrderedUpdates(self.chests)
+    self.overlay_sprite_group = pg.sprite.OrderedUpdates(self.paper)
 
 
   def _game_logic(self, events):
@@ -85,7 +86,9 @@ class MainGame:
 
 
     # call update functions of sprite objects in sprite group
-    self.sprite_group.update()
+    self.main_sprite_group.update()
+    for chest in self.chests:
+      chest.update(self.paper)
 
 
   def _draw(self):
@@ -93,7 +96,9 @@ class MainGame:
     # if this becomes a problem later with dynamically adding sprites
     #   we may need to draw individually or something
     #   maybe could have a dynamic nested sprite list perhaps?
-    updated_area = self.sprite_group.draw(self.screen)
+    updated_area = self.main_sprite_group.draw(self.screen)
+    updated_area += self.chests_sprite_group.draw(self.screen)
+    updated_area += self.overlay_sprite_group.draw(self.screen)
     for chest in self.chests:
       if chest.is_interacting:
         self.screen.blit(chest.image, chest.rect.topleft)
