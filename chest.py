@@ -1,8 +1,9 @@
 import pygame as pg
+from moviepy.editor import VideoFileClip
 import os
 
 class Chest(pg.sprite.Sprite):
-  def __init__(self, width, height, pos, screen_width, screen_height, passcode, secret_message):
+  def __init__(self, width, height, pos, screen_width, screen_height, passcode, secret_message, is_ending_chest = False):
     pg.sprite.Sprite.__init__(self)
     self.font = pg.font.SysFont(None, 256)
     self.font.set_bold(True)
@@ -20,6 +21,11 @@ class Chest(pg.sprite.Sprite):
     self.digits = [None, None, None, None]
     self.passcode = passcode
     self.secret_message = secret_message
+    self.is_ending_chest = is_ending_chest
+    if self.is_ending_chest:
+      self.ending_clip = VideoFileClip('Assets/ending_video.mpg')
+    else:
+      self.ending_clip = None
 
   def interact(self, paper):
     self.is_interacting = not self.is_interacting
@@ -27,9 +33,13 @@ class Chest(pg.sprite.Sprite):
       if self.is_locked:
         self.digits = [None, None, None, None]
       else:
-        paper.write(self.secret_message)
-        paper.appear()
-        pass
+        if self.is_ending_chest:
+          self.ending_clip.preview()
+          pg.quit()
+        else:
+          paper.write(self.secret_message)
+          paper.appear()
+          pass
     else:
       if self.is_locked:
         self.image = self.closed_image
