@@ -26,22 +26,30 @@ class Chest(pg.sprite.Sprite):
       self.ending_clip = VideoFileClip('Assets/ending_video.mpg')
     else:
       self.ending_clip = None
+    self.open_sound = pg.mixer.Sound(os.path.join("Assets", "chest_opening.wav"))
+    self.failed_open_sound = pg.mixer.Sound(os.path.join("Assets", "chest_failed_open.wav"))
+    self.enter_number_sound = pg.mixer.Sound(os.path.join("Assets", "enter_number.wav"))
+    self.open_number_panel_sound = pg.mixer.Sound(os.path.join("Assets", "open_number_panel.wav"))
+    self.close_number_panel_sound = pg.mixer.Sound(os.path.join("Assets", "close_number_panel.wav"))
 
   def interact(self, paper):
     self.is_interacting = not self.is_interacting
     if self.is_interacting:
       if self.is_locked:
+        pg.mixer.Channel(1).play(self.open_number_panel_sound)
         self.digits = [None, None, None, None]
       else:
         if self.is_ending_chest:
           self.ending_clip.preview()
           pg.quit()
         else:
+          pg.mixer.Channel(1).play(self.open_sound)
           paper.write(self.secret_message)
           paper.appear()
           pass
     else:
       if self.is_locked:
+        pg.mixer.Channel(1).play(self.close_number_panel_sound)
         self.image = self.closed_image
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
@@ -82,33 +90,43 @@ class Chest(pg.sprite.Sprite):
         if not self.is_digit_pressed:
           if keys[pg.K_0]:
             self.is_digit_pressed = True
+            pg.mixer.Channel(1).play(self.enter_number_sound)
             self.digits[self.digits.index(None)] = 0
           elif keys[pg.K_1]:
             self.is_digit_pressed = True
+            pg.mixer.Channel(1).play(self.enter_number_sound)
             self.digits[self.digits.index(None)] = 1
           elif keys[pg.K_2]:
             self.is_digit_pressed = True
+            pg.mixer.Channel(1).play(self.enter_number_sound)
             self.digits[self.digits.index(None)] = 2
           elif keys[pg.K_3]:
             self.is_digit_pressed = True
+            pg.mixer.Channel(1).play(self.enter_number_sound)
             self.digits[self.digits.index(None)] = 3
           elif keys[pg.K_4]:
             self.is_digit_pressed = True
+            pg.mixer.Channel(1).play(self.enter_number_sound)
             self.digits[self.digits.index(None)] = 4
           elif keys[pg.K_5]:
             self.is_digit_pressed = True
+            pg.mixer.Channel(1).play(self.enter_number_sound)
             self.digits[self.digits.index(None)] = 5
           elif keys[pg.K_6]:
             self.is_digit_pressed = True
+            pg.mixer.Channel(1).play(self.enter_number_sound)
             self.digits[self.digits.index(None)] = 6
           elif keys[pg.K_7]:
             self.is_digit_pressed = True
+            pg.mixer.Channel(1).play(self.enter_number_sound)
             self.digits[self.digits.index(None)] = 7
           elif keys[pg.K_8]:
             self.is_digit_pressed = True
+            pg.mixer.Channel(1).play(self.enter_number_sound)
             self.digits[self.digits.index(None)] = 8
           elif keys[pg.K_9]:
             self.is_digit_pressed = True
+            pg.mixer.Channel(1).play(self.enter_number_sound)
             self.digits[self.digits.index(None)] = 9
         elif not (keys[pg.K_0]
                   or keys[pg.K_1]
@@ -130,6 +148,7 @@ class Chest(pg.sprite.Sprite):
             self.is_interacting = False
             self.interact(paper)
           else:
+            pg.mixer.Channel(1).play(self.failed_open_sound)
             self.image = self.closed_image
             self.is_interacting = False
           self.rect = self.image.get_rect()

@@ -14,6 +14,7 @@ class Paper(pg.sprite.Sprite):
     self.image.blit(self.inner, (4,4))
     self.image.set_alpha(0)
     self.text = None
+    self.close_sound = pg.mixer.Sound(os.path.join("Assets", "click.wav"))
 
   def _clear_paper(self):
     self.image.fill((0,0,0))
@@ -23,6 +24,7 @@ class Paper(pg.sprite.Sprite):
     self.image.set_alpha(255)
 
   def dissapear(self):
+    pg.mixer.Channel(2).play(self.close_sound)
     self.image.set_alpha(0)
 
   def write(self, text):
