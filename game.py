@@ -64,7 +64,7 @@ class MainGame:
         self.player.move(1, self.island.mask, self.chests)
       if keys[pg.K_s]:
         self.player.move(-1, self.island.mask, self.chests)
-    # if keys[pg.K_e]:
+    # if keys[pg.K_e]: e is not a movement key
 
     for event in events:
       if (event.type == pg.KEYDOWN) and (event.key == pg.K_e):
