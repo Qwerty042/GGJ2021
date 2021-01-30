@@ -2,7 +2,7 @@ import pygame as pg
 import os
 
 class Chest(pg.sprite.Sprite):
-  def __init__(self, width, height, pos, screen_width, screen_height, passcode):
+  def __init__(self, width, height, pos, screen_width, screen_height, passcode, secret_message):
     pg.sprite.Sprite.__init__(self)
     self.font = pg.font.SysFont(None, 256)
     self.font.set_bold(True)
@@ -14,25 +14,24 @@ class Chest(pg.sprite.Sprite):
     self.rect.center = self.pos
     self.screen_width = screen_width
     self.screen_height = screen_height
-    self.is_closed = True
     self.is_locked = True
     self.is_interacting = False
     self.is_digit_pressed = False
     self.digits = [None, None, None, None]
     self.passcode = passcode
+    self.secret_message = secret_message
 
-  def interact(self):
+  def interact(self, paper):
     self.is_interacting = not self.is_interacting
-    if not self.is_locked:
-      self.is_closed = not self.is_closed
-      if self.is_closed: self.image = self.closed_image
-      else: self.image = self.open_image
-    else:
-      if not self.is_interacting:
+    if self.is_interacting:
+      if self.is_locked:
         self.digits = [None, None, None, None]
-        self.image = self.closed_image
-        self.rect = self.image.get_rect()
-        self.rect.center = self.pos
+      else:
+        paper.write(self.secret_message)
+        paper.appear()
+        pass
+    elif not self.is_locked:
+      paper.dissapear()
 
   def _draw_digits(self):
     block_height = 300
@@ -57,64 +56,69 @@ class Chest(pg.sprite.Sprite):
 
 
   def update(self):
-    if self.is_interacting and self.is_locked:
-      self.image = pg.Surface((self.screen_width - 200, self.screen_height - 200))
-      self.image.fill((79, 83, 97))
-      self.rect = self.image.get_rect()
-      self.rect.center = (self.screen_width//2, self.screen_height//2)
-      
-      keys = pg.key.get_pressed()
-      if not self.is_digit_pressed:
-        if keys[pg.K_0]:
-          self.is_digit_pressed = True
-          self.digits[self.digits.index(None)] = 0
-        elif keys[pg.K_1]:
-          self.is_digit_pressed = True
-          self.digits[self.digits.index(None)] = 1
-        elif keys[pg.K_2]:
-          self.is_digit_pressed = True
-          self.digits[self.digits.index(None)] = 2
-        elif keys[pg.K_3]:
-          self.is_digit_pressed = True
-          self.digits[self.digits.index(None)] = 3
-        elif keys[pg.K_4]:
-          self.is_digit_pressed = True
-          self.digits[self.digits.index(None)] = 4
-        elif keys[pg.K_5]:
-          self.is_digit_pressed = True
-          self.digits[self.digits.index(None)] = 5
-        elif keys[pg.K_6]:
-          self.is_digit_pressed = True
-          self.digits[self.digits.index(None)] = 6
-        elif keys[pg.K_7]:
-          self.is_digit_pressed = True
-          self.digits[self.digits.index(None)] = 7
-        elif keys[pg.K_8]:
-          self.is_digit_pressed = True
-          self.digits[self.digits.index(None)] = 8
-        elif keys[pg.K_9]:
-          self.is_digit_pressed = True
-          self.digits[self.digits.index(None)] = 9
-      elif not (keys[pg.K_0]
-                or keys[pg.K_1]
-                or keys[pg.K_2]
-                or keys[pg.K_3]
-                or keys[pg.K_4]
-                or keys[pg.K_5]
-                or keys[pg.K_6]
-                or keys[pg.K_7]
-                or keys[pg.K_8]
-                or keys[pg.K_9]): self.is_digit_pressed = False
+    if self.is_interacting:
+      if self.is_locked:
+        self.image = pg.Surface((self.screen_width - 200, self.screen_height - 200))
+        self.image.fill((79, 83, 97))
+        self.rect = self.image.get_rect()
+        self.rect.center = (self.screen_width//2, self.screen_height//2)
+        
+        keys = pg.key.get_pressed()
+        if not self.is_digit_pressed:
+          if keys[pg.K_0]:
+            self.is_digit_pressed = True
+            self.digits[self.digits.index(None)] = 0
+          elif keys[pg.K_1]:
+            self.is_digit_pressed = True
+            self.digits[self.digits.index(None)] = 1
+          elif keys[pg.K_2]:
+            self.is_digit_pressed = True
+            self.digits[self.digits.index(None)] = 2
+          elif keys[pg.K_3]:
+            self.is_digit_pressed = True
+            self.digits[self.digits.index(None)] = 3
+          elif keys[pg.K_4]:
+            self.is_digit_pressed = True
+            self.digits[self.digits.index(None)] = 4
+          elif keys[pg.K_5]:
+            self.is_digit_pressed = True
+            self.digits[self.digits.index(None)] = 5
+          elif keys[pg.K_6]:
+            self.is_digit_pressed = True
+            self.digits[self.digits.index(None)] = 6
+          elif keys[pg.K_7]:
+            self.is_digit_pressed = True
+            self.digits[self.digits.index(None)] = 7
+          elif keys[pg.K_8]:
+            self.is_digit_pressed = True
+            self.digits[self.digits.index(None)] = 8
+          elif keys[pg.K_9]:
+            self.is_digit_pressed = True
+            self.digits[self.digits.index(None)] = 9
+        elif not (keys[pg.K_0]
+                  or keys[pg.K_1]
+                  or keys[pg.K_2]
+                  or keys[pg.K_3]
+                  or keys[pg.K_4]
+                  or keys[pg.K_5]
+                  or keys[pg.K_6]
+                  or keys[pg.K_7]
+                  or keys[pg.K_8]
+                  or keys[pg.K_9]): self.is_digit_pressed = False
 
-      self._draw_digits()
+        self._draw_digits()
 
-      if self.digits.count(None) == 0:
-        if self.digits == self.passcode:
-          self.is_locked = False
-          self.is_closed = False
-          self.image = self.closed_image
+        if self.digits.count(None) == 0:
+          if self.digits == self.passcode:
+            self.is_locked = False
+            self.image = self.open_image
+            self.is_interacting = False
+            self.interact()
+          else:
+            self.image = self.closed_image
+            self.is_interacting = False
           self.rect = self.image.get_rect()
           self.rect.center = self.pos
-        self.interact()
+          
       
       
