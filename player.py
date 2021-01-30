@@ -12,7 +12,8 @@ class Player(pg.sprite.Sprite):
     # self.mask = pg.mask.from_surface(self.image)
     self.direction = 0                           # zero indicates the player is pointing to the right of screen
     self.pos_x, self.pos_y = self.rect.center    # have to use a seperate position variable because rect only uses integers
-
+    self.walking_sound = pg.mixer.Sound(os.path.join("Assets", "walking.wav")) 
+    
   def update(self):
     self.image = self.rot_center(self.original_image,self.direction)
     # self.mask = pg.mask.from_surface(self.image)
@@ -34,6 +35,8 @@ class Player(pg.sprite.Sprite):
       self.direction = 360
 
   def move(self, distance, island_mask, chests):
+    if not pg.mixer.Channel(3).get_busy():
+      pg.mixer.Channel(3).play(self.walking_sound)
     next_pos_x = self.pos_x + distance*math.cos(math.radians(self.direction))
     next_pos_y = self.pos_y - distance*math.sin(math.radians(self.direction))
       
