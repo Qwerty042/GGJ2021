@@ -87,7 +87,15 @@ class MainGame:
     #   we may need to draw individually or something
     #   maybe could have a dynamic nested sprite list perhaps?
     updated_area = self.sprite_group.draw(self.screen)
+    for chest in self.chests:
+      if chest.is_interacting:
+        self.screen.blit(chest.image, chest.rect.topleft)
+        break
+
     pg.display.update(updated_area)
+
+
+        
 
 
   def run(self):
