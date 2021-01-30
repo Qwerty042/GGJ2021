@@ -26,6 +26,7 @@ class MainGame:
     self.island = Island(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     self.player = Player(566//8, 566//8, (200, 200)) # I like me some magic numbers nom nom
     self.paper = Paper(self.SCREEN_WIDTH, 120, (0, self.SCREEN_HEIGHT - 120))
+    self.chest = Chest(642//8, 683//8, (400, 400)) # more yummy magic numbers nom nom nom
 
     # list of all the sprite objects to be drawn
     # first in list is drawn first so will be underneath evertthing else
@@ -33,6 +34,7 @@ class MainGame:
       self.background,
       self.island,
       self.player,
+      self.chest,
       self.paper
     ])
 
@@ -46,9 +48,9 @@ class MainGame:
     if keys[pg.K_d]:
       self.player.rotate(-1)
     if keys[pg.K_w]:
-      self.player.move(1, self.island.mask)
+      self.player.move(1, self.island.mask, self.chest)
     if keys[pg.K_s]:
-      self.player.move(-1, self.island.mask)
+      self.player.move(-1, self.island.mask, self.chest)
     if keys[pg.K_e]:
       self.paper.write("Hello World!")
       self.paper.appear()

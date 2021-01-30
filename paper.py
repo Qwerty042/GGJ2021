@@ -29,6 +29,5 @@ class Paper(pg.sprite.Sprite):
     self.text = text
     self._clear_paper()
     rendered_text = self.font.render(self.text, True, (0,0,0))
-    #text_rect = rendered_text.get_rect()
     self.image.blit(rendered_text, (10,10))
     
