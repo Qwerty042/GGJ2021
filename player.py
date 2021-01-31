@@ -34,7 +34,7 @@ class Player(pg.sprite.Sprite):
     if self.direction < 0:
       self.direction = 360
 
-  def move(self, distance, island_mask, chests):
+  def move(self, distance, island_mask, chests, tree):
     if not pg.mixer.Channel(3).get_busy():
       pg.mixer.Channel(3).play(self.walking_sound)
     next_pos_x = self.pos_x + distance*math.cos(math.radians(self.direction))
@@ -48,6 +48,12 @@ class Player(pg.sprite.Sprite):
       scaled_chest_mask_size = scaled_chest_mask.get_size()
       scaled_chest_mask_pos = (chest.rect.centerx - scaled_chest_mask_size[0]//2, chest.rect.centery - scaled_chest_mask_size[1]//2)
       island_mask.erase(scaled_chest_mask, scaled_chest_mask_pos)
+
+    tree_mask = pg.mask.from_surface(tree.mask_image)
+    scaled_tree_mask = tree_mask.scale((tree.rect.width + player_radius + 20, tree.rect.height + player_radius + 20))
+    scaled_tree_mask_size = scaled_tree_mask.get_size()
+    scaled_tree_mask_pos = (tree.rect.centerx - scaled_tree_mask_size[0]//2, tree.rect.centery - scaled_tree_mask_size[1]//2)
+    island_mask.erase(scaled_tree_mask, scaled_tree_mask_pos)
 
     mask_width, mask_height = island_mask.get_size()
     if (0 <= next_pos_x < mask_width) and (0 <= next_pos_y < mask_height):

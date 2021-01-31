@@ -7,6 +7,7 @@ from island import *
 from paper import *
 from chest import *
 from scroll import *
+from tree import *
 
   
 class MainGame:
@@ -42,6 +43,7 @@ class MainGame:
     self.island = Island(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     self.player = Player(566//8, 566//8, (200, 200)) # I like me some magic numbers nom nom
     self.paper = Paper(self.SCREEN_WIDTH, 120, (0, self.SCREEN_HEIGHT - 120))
+    self.tree = Tree(745//4, 671//4, (300,300))
     self.chest_1 = Chest(642//8, 683//8, (288, 138), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,9,6,9], chest_secret_messages[0])
     self.chest_2 = Chest(642//8, 683//8, (907, 125), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [5,5,1,6], chest_secret_messages[1])
     self.chest_3 = Chest(642//8, 683//8, (200, 570), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,9,6,9], chest_secret_messages[2])
@@ -60,7 +62,8 @@ class MainGame:
       self.background,
       self.island,
       *self.scrolls,
-      self.player
+      self.player,
+      self.tree
     ])
 
     self.chests_sprite_group = pg.sprite.OrderedUpdates(self.chests)
@@ -88,9 +91,9 @@ class MainGame:
       if keys[pg.K_d]:
         self.player.rotate(-1)
       if keys[pg.K_w]:
-        self.player.move(1, self.island.mask, self.chests)
+        self.player.move(1, self.island.mask, self.chests, self.tree)
       if keys[pg.K_s]:
-        self.player.move(-1, self.island.mask, self.chests)
+        self.player.move(-1, self.island.mask, self.chests, self.tree)
 
     for event in events:
       if (event.type == pg.KEYDOWN) and (event.key == pg.K_e):
