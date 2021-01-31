@@ -132,11 +132,11 @@ class MainGame:
     #   maybe could have a dynamic nested sprite list perhaps?
     updated_area = self.main_sprite_group.draw(self.screen)
     updated_area += self.chests_sprite_group.draw(self.screen)
-    updated_area += self.overlay_sprite_group.draw(self.screen)
     for chest in self.chests:
       if chest.is_interacting:
         self.screen.blit(chest.image, chest.rect.topleft)
         break
+    updated_area += self.overlay_sprite_group.draw(self.screen)
 
     pg.display.update(updated_area)
 
