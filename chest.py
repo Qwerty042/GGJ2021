@@ -18,6 +18,7 @@ class Chest(pg.sprite.Sprite):
     self.is_locked = True
     self.is_interacting = False
     self.is_digit_pressed = False
+    self.passcode_delay = 0
     self.digits = [None, None, None, None]
     self.passcode = passcode
     self.secret_message = secret_message
@@ -81,78 +82,79 @@ class Chest(pg.sprite.Sprite):
   def update(self, paper):
     if self.is_interacting:
       if self.is_locked:
-        self.image = pg.Surface((self.screen_width - 200, self.screen_height - 200))
-        self.image.fill((79, 83, 97))
-        self.rect = self.image.get_rect()
-        self.rect.center = (self.screen_width//2, self.screen_height//2)
-        
-        keys = pg.key.get_pressed()
-        if not self.is_digit_pressed:
-          if keys[pg.K_0]:
-            self.is_digit_pressed = True
-            pg.mixer.Channel(1).play(self.enter_number_sound)
-            self.digits[self.digits.index(None)] = 0
-          elif keys[pg.K_1]:
-            self.is_digit_pressed = True
-            pg.mixer.Channel(1).play(self.enter_number_sound)
-            self.digits[self.digits.index(None)] = 1
-          elif keys[pg.K_2]:
-            self.is_digit_pressed = True
-            pg.mixer.Channel(1).play(self.enter_number_sound)
-            self.digits[self.digits.index(None)] = 2
-          elif keys[pg.K_3]:
-            self.is_digit_pressed = True
-            pg.mixer.Channel(1).play(self.enter_number_sound)
-            self.digits[self.digits.index(None)] = 3
-          elif keys[pg.K_4]:
-            self.is_digit_pressed = True
-            pg.mixer.Channel(1).play(self.enter_number_sound)
-            self.digits[self.digits.index(None)] = 4
-          elif keys[pg.K_5]:
-            self.is_digit_pressed = True
-            pg.mixer.Channel(1).play(self.enter_number_sound)
-            self.digits[self.digits.index(None)] = 5
-          elif keys[pg.K_6]:
-            self.is_digit_pressed = True
-            pg.mixer.Channel(1).play(self.enter_number_sound)
-            self.digits[self.digits.index(None)] = 6
-          elif keys[pg.K_7]:
-            self.is_digit_pressed = True
-            pg.mixer.Channel(1).play(self.enter_number_sound)
-            self.digits[self.digits.index(None)] = 7
-          elif keys[pg.K_8]:
-            self.is_digit_pressed = True
-            pg.mixer.Channel(1).play(self.enter_number_sound)
-            self.digits[self.digits.index(None)] = 8
-          elif keys[pg.K_9]:
-            self.is_digit_pressed = True
-            pg.mixer.Channel(1).play(self.enter_number_sound)
-            self.digits[self.digits.index(None)] = 9
-        elif not (keys[pg.K_0]
-                  or keys[pg.K_1]
-                  or keys[pg.K_2]
-                  or keys[pg.K_3]
-                  or keys[pg.K_4]
-                  or keys[pg.K_5]
-                  or keys[pg.K_6]
-                  or keys[pg.K_7]
-                  or keys[pg.K_8]
-                  or keys[pg.K_9]): self.is_digit_pressed = False
-
-        self._draw_digits()
-
         if self.digits.count(None) == 0:
-          if self.digits == self.passcode:
-            self.is_locked = False
-            self.image = self.open_image
-            self.is_interacting = False
-            self.interact(paper)
+          if self.passcode_delay >= 50:
+            self.passcode_delay = 0
+            if self.digits == self.passcode:
+              self.is_locked = False
+              self.image = self.open_image
+              self.is_interacting = False
+              self.interact(paper)
+            else:
+              pg.mixer.Channel(1).play(self.failed_open_sound)
+              self.image = self.closed_image
+              self.is_interacting = False
+            self.rect = self.image.get_rect()
+            self.rect.center = self.pos
           else:
-            pg.mixer.Channel(1).play(self.failed_open_sound)
-            self.image = self.closed_image
-            self.is_interacting = False
+            self.passcode_delay += 1
+        else:
+          self.image = pg.Surface((self.screen_width - 200, self.screen_height - 200))
+          self.image.fill((79, 83, 97))
           self.rect = self.image.get_rect()
-          self.rect.center = self.pos
+          self.rect.center = (self.screen_width//2, self.screen_height//2)
           
-      
-      
+          keys = pg.key.get_pressed()
+          if not self.is_digit_pressed:
+            if keys[pg.K_0]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 0
+            elif keys[pg.K_1]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 1
+            elif keys[pg.K_2]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 2
+            elif keys[pg.K_3]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 3
+            elif keys[pg.K_4]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 4
+            elif keys[pg.K_5]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 5
+            elif keys[pg.K_6]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 6
+            elif keys[pg.K_7]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 7
+            elif keys[pg.K_8]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 8
+            elif keys[pg.K_9]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 9
+          elif not (keys[pg.K_0]
+                    or keys[pg.K_1]
+                    or keys[pg.K_2]
+                    or keys[pg.K_3]
+                    or keys[pg.K_4]
+                    or keys[pg.K_5]
+                    or keys[pg.K_6]
+                    or keys[pg.K_7]
+                    or keys[pg.K_8]
+                    or keys[pg.K_9]): self.is_digit_pressed = False
+
+          self._draw_digits()

@@ -1,7 +1,6 @@
 import pygame as pg
 from moviepy.editor import VideoFileClip
 import os
-import sys
 from player import *
 from background import *
 from island import *
