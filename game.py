@@ -44,11 +44,11 @@ class MainGame:
     self.paper = Paper(self.SCREEN_WIDTH, 120, (0, self.SCREEN_HEIGHT - 120))
     self.chest_1 = Chest(642//8, 683//8, (288, 138), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,9,6,9], chest_secret_messages[0])
     self.chest_2 = Chest(642//8, 683//8, (907, 125), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [5,5,1,6], chest_secret_messages[1])
-    self.chest_3 = Chest(642//8, 683//8, (200, 660), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,9,6,9], chest_secret_messages[2])
-    self.chest_4 = Chest(642//8, 683//8, (1025, 648), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [9,8,5,7], chest_secret_messages[3])
+    self.chest_3 = Chest(642//8, 683//8, (200, 570), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,9,6,9], chest_secret_messages[2])
+    self.chest_4 = Chest(642//8, 683//8, (1035, 572), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [9,8,5,7], chest_secret_messages[3])
     self.chest_5 = Chest(642//8, 683//8, (557, 585), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [1,7,0,4], chest_secret_messages[4])
-    self.chest_6 = Chest(642//8, 683//8, (550, 379), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,0,7,9], chest_secret_messages[5], is_ending_chest = True)
-    self.scroll_1 = Scroll(395//8, 404//8, (304, 455), scroll_messages[0])
+    self.chest_6 = Chest(642//8, 683//8, (550, 329), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,0,7,9], chest_secret_messages[5], is_ending_chest = True)
+    self.scroll_1 = Scroll(395//8, 404//8, (120, 305), scroll_messages[0])
     self.scroll_2 = Scroll(395//8, 404//8, (633, 129), scroll_messages[1])
     self.scroll_3 = Scroll(395//8, 404//8, (900, 415), scroll_messages[2])
 
@@ -151,13 +151,15 @@ class MainGame:
 
       # So you can actually exit the game
       for event in events:
-        if (event.type == pg.QUIT) or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-          sys.exit()
+        if (event.type == pg.QUIT):
+          pg.quit()
 
 
 
 
 def main():
+  icon = pg.image.load('Assets/L.png')
+  pg.display.set_icon(icon)
   pg.display.set_caption("LOST")
   clip = VideoFileClip('Assets/intro_video.mpg')
   clip.preview()
