@@ -17,7 +17,7 @@ class MainGame:
     self.SCREEN_HEIGHT = 800
     self.SCREEN_SIZE = (self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     chest_secret_messages = [
-      "Nice.",
+      "https://i.imgur.com/o5P9Sg3.png",
       "tinyurl.com/aliensarerealandtheyarehere",
       "Nice.",
       "Password: check the game description for the password",
@@ -28,7 +28,7 @@ class MainGame:
     scroll_messages = [
       "4, 8, 15, 16, 23, 42",
       "The code to the south chest is the year Gabriel Cramer was born.",
-      "Press E to interact with objects... oh wait you just have."
+      "If you want to see a llama, the code to the northwest chest is 4815!"
     ]
 
     pg.init()
