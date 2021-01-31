@@ -37,6 +37,7 @@ class MainGame:
     pg.display.set_caption("LOST")
 
     self.bg_music = pg.mixer.Sound(os.path.join("Assets", "The_Islands_Mystery.wav"))
+    self.bg_music_mute = True
 
     self.background = Background(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     self.island = Island(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
@@ -109,6 +110,12 @@ class MainGame:
               scroll.interact(self.paper)
           else:
             scroll.interact(self.paper)
+      if (event.type == pg.KEYDOWN) and (event.key == pg.K_m):
+        self.bg_music_mute = not self.bg_music_mute
+        if self.bg_music_mute:
+          pg.mixer.Channel(0).set_volume(0.0)
+        else:
+          pg.mixer.Channel(0).set_volume(1.0)
 
 
 
@@ -140,6 +147,7 @@ class MainGame:
   def run(self):
     
     pg.mixer.Channel(0).play(self.bg_music, -1)
+    self.bg_music_mute = False
     
     while True:
       # pg.event.get() clears event queue once called so need to save
