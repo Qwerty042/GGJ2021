@@ -16,7 +16,7 @@ class MainGame:
     self.SCREEN_HEIGHT = 800
     self.SCREEN_SIZE = (self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     chest_secret_messages = [
-      "Nice.",
+      "https://i.imgur.com/o5P9Sg3.png",
       "tinyurl.com/aliensarerealandtheyarehere",
       "Nice.",
       "Password: check the game description for the password",
@@ -27,7 +27,7 @@ class MainGame:
     scroll_messages = [
       "4, 8, 15, 16, 23, 42",
       "The code to the south chest is the year Gabriel Cramer was born.",
-      "Press E to interact with objects... oh wait you just have."
+      "If you want to see a llama, the code to the northwest chest is 4815!"
     ]
 
     pg.init()
@@ -42,7 +42,7 @@ class MainGame:
     self.island = Island(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
     self.player = Player(566//8, 566//8, (200, 200)) # I like me some magic numbers nom nom
     self.paper = Paper(self.SCREEN_WIDTH, 120, (0, self.SCREEN_HEIGHT - 120))
-    self.chest_1 = Chest(642//8, 683//8, (288, 138), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,9,6,9], chest_secret_messages[0])
+    self.chest_1 = Chest(642//8, 683//8, (288, 138), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [4,8,1,5], chest_secret_messages[0])
     self.chest_2 = Chest(642//8, 683//8, (907, 125), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [5,5,1,6], chest_secret_messages[1])
     self.chest_3 = Chest(642//8, 683//8, (200, 570), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [6,9,6,9], chest_secret_messages[2])
     self.chest_4 = Chest(642//8, 683//8, (1035, 572), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, [9,8,5,7], chest_secret_messages[3])
