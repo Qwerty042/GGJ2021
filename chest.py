@@ -146,6 +146,47 @@ class Chest(pg.sprite.Sprite):
               self.is_digit_pressed = True
               pg.mixer.Channel(1).play(self.enter_number_sound)
               self.digits[self.digits.index(None)] = 9
+
+            elif keys[pg.K_KP0]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 0
+            elif keys[pg.K_KP1]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 1
+            elif keys[pg.K_KP2]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 2
+            elif keys[pg.K_KP3]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 3
+            elif keys[pg.K_KP4]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 4
+            elif keys[pg.K_KP5]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 5
+            elif keys[pg.K_KP6]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 6
+            elif keys[pg.K_KP7]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 7
+            elif keys[pg.K_KP8]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 8
+            elif keys[pg.K_KP9]:
+              self.is_digit_pressed = True
+              pg.mixer.Channel(1).play(self.enter_number_sound)
+              self.digits[self.digits.index(None)] = 9
           elif not (keys[pg.K_0]
                     or keys[pg.K_1]
                     or keys[pg.K_2]
@@ -155,6 +196,16 @@ class Chest(pg.sprite.Sprite):
                     or keys[pg.K_6]
                     or keys[pg.K_7]
                     or keys[pg.K_8]
-                    or keys[pg.K_9]): self.is_digit_pressed = False
+                    or keys[pg.K_9]
+                    or keys[pg.K_KP0]
+                    or keys[pg.K_KP1]
+                    or keys[pg.K_KP2]
+                    or keys[pg.K_KP3]
+                    or keys[pg.K_KP4]
+                    or keys[pg.K_KP5]
+                    or keys[pg.K_KP6]
+                    or keys[pg.K_KP7]
+                    or keys[pg.K_KP8]
+                    or keys[pg.K_KP9]): self.is_digit_pressed = False
 
           self._draw_digits()

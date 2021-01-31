@@ -49,10 +49,13 @@ class Player(pg.sprite.Sprite):
       scaled_chest_mask_pos = (chest.rect.centerx - scaled_chest_mask_size[0]//2, chest.rect.centery - scaled_chest_mask_size[1]//2)
       island_mask.erase(scaled_chest_mask, scaled_chest_mask_pos)
 
-    if island_mask.get_at((int(next_pos_x), int(next_pos_y))): # new pos is inside island
-      self.pos_x = next_pos_x
-      self.pos_y = next_pos_y
-    # else:
+    mask_width, mask_height = island_mask.get_size()
+    if (0 <= next_pos_x < mask_width) and (0 <= next_pos_y < mask_height):
+      if island_mask.get_at((int(next_pos_x), int(next_pos_y))): # new pos is inside island
+        self.pos_x = next_pos_x
+        self.pos_y = next_pos_y
+
+    # else: also broken code, dosnt work
     #   points = island_mask.outline()
     #   min_dist = 1000
     #   min_dist_point = (0,0)
